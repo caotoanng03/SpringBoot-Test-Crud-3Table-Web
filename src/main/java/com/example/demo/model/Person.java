@@ -1,6 +1,9 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import jakarta.websocket.OnError;
+
+import java.util.List;
 
 @Entity
 @Table(name="szemely")
@@ -14,6 +17,30 @@ public class Person {
     private String plateNumber;
     @Column(name="magassag")
     private int height;
+
+    @OneToMany
+    @JoinColumn(name="szemelyid")
+    private List<Telephone> phoneNumbers;
+
+    @OneToOne
+    @JoinColumn(name="rendszam", insertable = false, updatable = false)
+    private Vehicle vehicle;
+
+    public List<Telephone> getPhoneNumbers() {
+        return phoneNumbers;
+    }
+
+    public void setPhoneNumbers(List<Telephone> phoneNumbers) {
+        this.phoneNumbers = phoneNumbers;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
 
     public int getId() {
         return id;

@@ -21,6 +21,7 @@ public class HomeController {
     public String home(Model model, String message) {
         String str = A();
         model.addAttribute("str", str);
+        model.addAttribute("heading", "[GET] /");
         return "/pages/index";
     }
 
@@ -41,6 +42,31 @@ public class HomeController {
         for(Vehicle vehicle: vehicleRepo.findAll()) {
             str+=String.format("%s ; %s ; %s%n",
                     vehicle.getPlateNumber(), vehicle.getBrand(), vehicle.getColor());
+            str += "<br/>";
+        }
+        return str;
+    }
+
+    @GetMapping("/persons")
+    public String getAllPersons(Model model, String message) {
+        String str = B();
+        model.addAttribute("str", str);
+        model.addAttribute("heading", "[GET] /persons");
+        return "/pages/index";
+    }
+
+    String B() {
+        String str = "";
+        for(Person person: personRepo.findAll()) {
+            str+=String.format("%d ; %s ; %s ; %d ; ",
+                    person.getId(), person.getName(), person.getPlateNumber(), person.getHeight());
+            for(int i = 0; i < person.getPhoneNumbers().size(); ++i) {
+                str+=person.getPhoneNumbers().get(i).getPhoneNumber();
+                if(i < person.getPhoneNumbers().size() - 1)
+                    str+= ", ";
+            }
+            str += "; ";
+            str += person.getVehicle().getBrand() + "; " + person.getVehicle().getColor() + "; ";
             str += "<br/>";
         }
         return str;

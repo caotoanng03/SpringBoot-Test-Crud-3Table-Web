@@ -12,6 +12,18 @@ public class Telephone {
     @Column(name="szam")
     private String phoneNumber;
 
+    @ManyToOne
+    @JoinColumn(name="szemelyid", insertable = false, updatable = false)
+    private Person person;
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
     public int getId() {
         return id;
     }
