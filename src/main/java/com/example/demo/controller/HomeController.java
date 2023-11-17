@@ -71,4 +71,39 @@ public class HomeController {
         }
         return str;
     }
+
+    @GetMapping("/telephones")
+    String getAllTelephones(Model model) {
+        String str = C();
+        model.addAttribute("str", str);
+        model.addAttribute("heading", "Write down every phone number, along with the name of the owner and the color of the vehicle");
+        return "/pages/index";
+    }
+    String C() {
+        String str="";
+        for(Telephone teleph : telephoneRepo.findAll()) {
+            str+=String.format("%s; %s; %s",
+                    teleph.getPhoneNumber(), teleph.getPerson().getName(), teleph.getPerson().getVehicle().getColor());
+            str+="</br>";
+        }
+        return str;
+    }
+
+    @GetMapping("/kiss-jozsef")
+    String getPersonDetail(Model model) {
+        String str = D();
+        model.addAttribute("str", str);
+        model.addAttribute("heading",
+                "List out the information of Kiss József: name; height; vehicle's brand");
+        return "/pages/index";
+    }
+
+    String D() {
+        Person person = personRepo.findByName("Kiss József");
+        String str = String.format("%s; %d; %s",
+                person.getName(), person.getHeight(), person.getVehicle().getBrand());
+
+        return str;
+    }
+
 }
